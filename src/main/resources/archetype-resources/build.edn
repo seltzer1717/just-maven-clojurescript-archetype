@@ -1,0 +1,13 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+{:main                  "${package}.core"
+ :output-to             "targetjs/output/bundle.js"
+ :output-dir            "targetjs/output/node_modules"
+ :print-input-delimiter true
+ :optimizations         :none
+ :source-map            true
+ :source-map-timestamp  true
+ :deps-cmd              npm
+;; :target                :nodejs
+ }
