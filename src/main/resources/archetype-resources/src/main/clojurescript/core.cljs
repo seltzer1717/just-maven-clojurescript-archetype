@@ -2,8 +2,15 @@
 #set( $symbol_dollar = '$' )
 #set( $symbol_escape = '\' )
 (ns ${package}.core
-  (:require react-dom))
+  (:require [cljs.nodejs :as nodejs]))
 
-(.render js/ReactDOM
-  (.createElement js/React "h2" nil "Hello, React!")
-  (.getElementById js/document "app"))
+(nodejs/enable-util-print!)
+
+(defn my-add [ops]
+  (apply + (mapv js/parseInt ops)))
+
+(defn -main [& args]
+  (let [total (my-add args)]
+    total))
+
+(set! *main-cli-fn* -main)

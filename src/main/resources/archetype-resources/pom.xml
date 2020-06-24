@@ -1,13 +1,10 @@
-#set( $symbol_pound = '#' )
-#set( $symbol_dollar = '$' )
-#set( $symbol_escape = '\' )
 <?xml version="1.0" encoding="UTF-8" ?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>${groupId}</groupId>
-  <artifactId>${artifactId}</artifactId>
-  <version>${version}</version>
+  <groupId>cloud.seltzer1717.clojure</groupId>
+  <artifactId>test-clojurescript-archetype</artifactId>
+  <version>1.0-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <properties>
@@ -17,7 +14,9 @@
     <clojure.version>1.10.1</clojure.version>
     <clojurescript.version>1.10.758</clojurescript.version>
     <clojurescript.source.dir>src/main/clojurescript</clojurescript.source.dir>
-    <clojurescript.output.dir>targetjs/output</clojurescript.output.dir>
+    <clojurescript.source.output.dir>target/js</clojurescript.source.output.dir>
+    <clojurescript.test.dir>src/test/clojurescript</clojurescript.test.dir>
+    <clojurescript.test.output.dir>target/test-js</clojurescript.test.output.dir>
     <react.version>16.2.0-3</react.version>
   </properties>
 
@@ -47,10 +46,10 @@
   </repositories>
 
   <build>
-    <sourceDirectory>${basedir}/src/main/clojurescript</sourceDirectory>
-    <testSourceDirectory>${basedir}/src/test/clojurescript</testSourceDirectory>
-    <outputDirectory>${basedir}/targetjs/js</outputDirectory>
-    <testOutputDirectory>${basedir}/targetjs/test-js</testOutputDirectory>
+    <sourceDirectory>${basedir}/${clojurescript.source.dir}</sourceDirectory>
+    <testSourceDirectory>${basedir}/${clojurescript.test.dir}</testSourceDirectory>
+    <outputDirectory>${basedir}/${clojurescript.source.output.dir}</outputDirectory>
+    <testOutputDirectory>${basedir}/${clojurescript.test.output.dir}</testOutputDirectory>
     <pluginManagement>
       <plugins>
         <plugin>
@@ -93,8 +92,10 @@
               </systemProperties>
               <additionalClasspathElements>
                 <additionalClasspathElement>${project.build.sourceDirectory}</additionalClasspathElement>
+                <additionalClasspathElement>${project.build.testSourceDirectory}</additionalClasspathElement>
                 <additionalClasspathElement>${project.build.outputDirectory}</additionalClasspathElement>
-                <additionalClasspathElement>${project.basedir}</additionalClasspathElement>
+                <additionalClasspathElement>${project.build.testOutputDirectory}</additionalClasspathElement>
+                <additionalClasspathElement>${basedir}</additionalClasspathElement>
               </additionalClasspathElements>
               <commandlineArgs>${clojure.args}</commandlineArgs>
             </configuration>
@@ -103,20 +104,23 @@
             </goals>
           </execution>
           <execution>
-            <id>compile-clojurescript</id>
-            <phase>compile</phase>
+            <id>clojurescript-bat</id>
             <configuration>
+              <systemProperties>
+                <systemProperty>
+                  <key>maven.test.dir</key>
+                  <value>${project.build.testSourceDirectory}</value>
+                </systemProperty>
+              </systemProperties>
               <additionalClasspathElements>
                 <additionalClasspathElement>${project.build.sourceDirectory}</additionalClasspathElement>
+                <additionalClasspathElement>${project.build.testSourceDirectory}</additionalClasspathElement>
                 <additionalClasspathElement>${project.build.outputDirectory}</additionalClasspathElement>
-                <additionalClasspathElement>${project.basedir}/${clojurescript.source.dir}</additionalClasspathElement>
+                <additionalClasspathElement>${project.build.testOutputDirectory}</additionalClasspathElement>
+                <additionalClasspathElement>${basedir}</additionalClasspathElement>
               </additionalClasspathElements>
               <arguments>
-                <param>.clojure/scripts/clojurescript.clj</param>
-                <param>--compile-opts</param>
-                <param>build.edn</param>
-                <param>--compile</param>
-                <param>${package}.core</param>
+                <argument>.clojure/scripts/test.clj</argument>
               </arguments>
             </configuration>
             <goals>
@@ -124,20 +128,74 @@
             </goals>
           </execution>
           <execution>
-            <id>test-clojurescript</id>
-            <!-- <phase>test</phase> -->
+            <id>clojurescript-repl</id>
             <configuration>
               <additionalClasspathElements>
                 <additionalClasspathElement>${project.build.sourceDirectory}</additionalClasspathElement>
+                <additionalClasspathElement>${project.build.testSourceDirectory}</additionalClasspathElement>
                 <additionalClasspathElement>${project.build.outputDirectory}</additionalClasspathElement>
-                <additionalClasspathElement>${project.basedir}/${clojurescript.source.dir}</additionalClasspathElement>
+                <additionalClasspathElement>${project.build.testOutputDirectory}</additionalClasspathElement>
+                <additionalClasspathElement>${basedir}</additionalClasspathElement>
               </additionalClasspathElements>
               <arguments>
-                <param>.clojure/scripts/clojurescript.clj</param>
-                <param>--compile-opts</param>
-                <param>build.edn</param>
-                <param>--compile</param>
-                <param>${package}.core</param>
+                <argument>.clojure/scripts/repl.clj</argument>
+                <argument>--compile-opts</argument>
+                <argument>.clojure/opts/compile_opts.edn</argument>
+                <argument>--repl-opts</argument>
+                <argument>.clojure/opts/repl_opts.edn</argument>
+                <argument>--repl-env</argument>
+                <argument>node</argument>
+                <argument>--target</argument>
+                <argument>node</argument>
+                <argument>--repl</argument>
+              </arguments>
+            </configuration>
+            <goals>
+              <goal>java</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>clojurescript-compile</id>
+            <configuration>
+              <systemProperties>
+                <systemProperty>
+                  <key>maven.source.dir</key>
+                  <value>${project.build.sourceDirectory}</value>
+                </systemProperty>
+              </systemProperties>
+              <additionalClasspathElements>
+                <additionalClasspathElement>${project.build.sourceDirectory}</additionalClasspathElement>
+                <additionalClasspathElement>${project.build.testSourceDirectory}</additionalClasspathElement>
+                <additionalClasspathElement>${project.build.outputDirectory}</additionalClasspathElement>
+                <additionalClasspathElement>${project.build.testOutputDirectory}</additionalClasspathElement>
+                <additionalClasspathElement>${basedir}</additionalClasspathElement>
+              </additionalClasspathElements>
+              <arguments>
+                <argument>.clojure/scripts/compile.clj</argument>
+              </arguments>
+            </configuration>
+            <goals>
+              <goal>java</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>clojurescript-test</id>
+            <configuration>
+              <systemProperties>
+                <systemProperty>
+                  <key>maven.test.dir</key>
+                  <value>${project.build.testSourceDirectory}</value>
+                </systemProperty>
+              </systemProperties>
+              <additionalClasspathElements>
+                <additionalClasspathElement>${project.build.sourceDirectory}</additionalClasspathElement>
+                <additionalClasspathElement>${project.build.testSourceDirectory}</additionalClasspathElement>
+                <additionalClasspathElement>${project.build.outputDirectory}</additionalClasspathElement>
+                <additionalClasspathElement>${project.build.testOutputDirectory}</additionalClasspathElement>
+                <additionalClasspathElement>${basedir}</additionalClasspathElement>
+              </additionalClasspathElements>
+              <arguments>
+                <argument>.clojure/scripts/test.clj</argument>
               </arguments>
             </configuration>
             <goals>

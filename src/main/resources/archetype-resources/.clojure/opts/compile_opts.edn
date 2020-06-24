@@ -1,0 +1,5 @@
+{:output-to     "main.js"
+ :output-dir    "out-dir"
+ :optimizations :none
+ :deps-cmd      "npm"
+ :target        :nodejs}

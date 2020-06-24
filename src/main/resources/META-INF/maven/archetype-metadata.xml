@@ -13,6 +13,9 @@
     <fileSet encoding="UTF-8">
       <directory>src/main/resources</directory>
     </fileSet>
+    <fileSet encoding="UTF-8">
+      <directory>src/main/web</directory>
+    </fileSet>
     <fileSet filtered="true" encoding="UTF-8">
       <directory></directory>
       <includes>
@@ -38,13 +41,25 @@
     <fileSet encoding="UTF-8">
       <directory>.clojure/scripts</directory>
       <includes>
-        <include>clojurescript.clj</include>
+        <include>compile.clj</include>
+        <include>repl.clj</include>
+        <include>test.clj</include>
+      </includes>
+    </fileSet>
+    <fileSet encoding="UTF-8">
+      <directory>.clojure/opts</directory>
+      <includes>
+        <include>compile_opts.edn</include>
+        <include>compile_test_opts.edn</include>
+        <include>repl_opts.edn</include>
       </includes>
     </fileSet>
     <fileSet encoding="UTF-8">
       <directory></directory>
       <includes>
+        <include>clj.bat</include>
         <include>cljs.bat</include>
+        <include>cljs_help.txt</include>
       </includes>
     </fileSet>
   </fileSets>
