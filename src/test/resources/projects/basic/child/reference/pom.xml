@@ -1,28 +1,25 @@
-#set( $symbol_pound = '#' )
-#set( $symbol_dollar = '$' )
-#set( $symbol_escape = '\' )
 <?xml version="1.0" encoding="UTF-8" ?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>${groupId}</groupId>
-  <artifactId>${artifactId}</artifactId>
-  <version>${version}</version>
+  <groupId>com.foo.aws</groupId>
+  <artifactId>foo-lambda</artifactId>
+  <version>1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>${maven-compiler-source}</maven.compiler.source>
-    <maven.compiler.target>${maven-compiler-target}</maven.compiler.target>
-    <clojure.version>${clojure-version}</clojure.version>
-    <clojurescript.version>${clojurescript-version}</clojurescript.version>
-    <commons-codec.version>${commons-codec-version}</commons-codec.version>
-    <core.async.version>${core-async-version}</core.async.version>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
+    <clojure.version>1.10.2</clojure.version>
+    <clojurescript.version>1.10.879</clojurescript.version>
+    <commons-codec.version>1.15</commons-codec.version>
+    <core.async.version>1.5.640</core.async.version>
     <clojure.scripts.dir>.clojure/scripts</clojure.scripts.dir>
     <clojure.opts.dir>.clojure/opts</clojure.opts.dir>
     <clojurescript.source.dir>src/main/clojurescript</clojurescript.source.dir>
-    <clojurescript.source.entrynamespace>${package}.core</clojurescript.source.entrynamespace>
-    <clojurescript.source.testentry>${package}.test-suite</clojurescript.source.testentry>
+    <clojurescript.source.entrynamespace>com.foo.aws.core</clojurescript.source.entrynamespace>
+    <clojurescript.source.testentry>com.foo.aws.test-suite</clojurescript.source.testentry>
     <clojurescript.source.output.dir>target/js</clojurescript.source.output.dir>
     <clojurescript.test.dir>src/test/clojurescript</clojurescript.test.dir>
     <clojurescript.test.output.dir>target/test-js</clojurescript.test.output.dir>
@@ -112,7 +109,7 @@
               <arguments>
                 <argument>${clojure.scripts.dir}/cljs.clj</argument>
                 <argument>--compile-opts</argument>
-                <argument>${clojure.opts.dir}/compile_repl_opts.edn</argument>
+                <argument>${clojure.opts.dir}/compile_opts.edn</argument>
                 <argument>--repl-opts</argument>
                 <argument>${clojure.opts.dir}/repl_opts.edn</argument>
                 <argument>--repl-env</argument>
@@ -137,6 +134,7 @@
               </systemProperties>
               <additionalClasspathElements>
                 <additionalClasspathElement>${project.build.sourceDirectory}</additionalClasspathElement>
+                <additionalClasspathElement>${project.build.testSourceDirectory}</additionalClasspathElement>
                 <additionalClasspathElement>${basedir}</additionalClasspathElement>
               </additionalClasspathElements>
               <arguments>
@@ -188,6 +186,12 @@
             <id>cljs-test</id>
             <phase>test</phase>
             <configuration>
+              <systemProperties>
+                <systemProperty>
+                  <key>maven.source.dir</key>
+                  <value>${project.build.sourceDirectory}</value>
+                </systemProperty>
+              </systemProperties>
               <additionalClasspathElements>
                 <additionalClasspathElement>${project.build.sourceDirectory}</additionalClasspathElement>
                 <additionalClasspathElement>${project.build.testSourceDirectory}</additionalClasspathElement>

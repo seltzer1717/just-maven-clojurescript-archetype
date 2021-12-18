@@ -1,0 +1,5 @@
+{:output-dir    "target/repl-js"
+ :output-to     "target/repl-js/index.js"
+ :optimizations :none
+ :target        :nodejs
+ :deps-cmd      "npm"}

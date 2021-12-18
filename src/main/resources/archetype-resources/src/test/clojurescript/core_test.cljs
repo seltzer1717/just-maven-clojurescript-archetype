@@ -1,9 +1,9 @@
-(ns cloud.seltzer1717.clojure.godsplan.core-test
-  (:require [cloud.seltzer1717.clojure.godsplan.core :as c]
-            [cljs.test :refer-macros [deftest is testing run-tests]]
-            [cljs.nodejs :as nodejs]))
-
-(nodejs/enable-util-print!)
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+(ns ${package}.core-test
+  (:require [${package}.core :as c]
+            [cljs.test :refer-macros [deftest is]]))
 
 (deftest test-numbers
   (is (= 5 (c/my-add [2 3]))))

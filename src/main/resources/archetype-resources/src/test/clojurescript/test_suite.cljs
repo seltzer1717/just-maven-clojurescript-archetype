@@ -1,8 +1,8 @@
-(ns cloud.seltzer1717.clojure.godsplan.test-suite
-  (:require [cloud.seltzer1717.clojure.godsplan.core-test :as c]
-            [cljs.test :refer-macros [run-tests]]
-            [cljs.nodejs :as nodejs]))
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+(ns ${package}.test-suite
+  (:require [${package}.core-test :as c]
+            [cljs.test :refer-macros [run-tests]]))
 
-(nodejs/enable-util-print!)
-
-(cljs.test/run-tests 'cloud.seltzer1717.clojure.godsplan.core-test)
+(run-tests 'cloud.seltzer1717.clojure.godsplan.core-test)

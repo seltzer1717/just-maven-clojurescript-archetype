@@ -3,4 +3,7 @@
  :output-to     "target/test-js/tests.js"
  :optimizations :none
  :target        :nodejs
- :deps-cmd      "npm"}
+ :deps-cmd      "npm"
+ :npm-deps      {"@aws-sdk/client-dynamodb" "3.43.0"
+                 "source-map-support"       "0.5.21"}
+ :install-deps  true}
