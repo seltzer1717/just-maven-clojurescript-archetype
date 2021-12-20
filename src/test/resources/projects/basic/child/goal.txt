@@ -1,1 +1,1 @@
-exec:java@cljs-compile
+clean install

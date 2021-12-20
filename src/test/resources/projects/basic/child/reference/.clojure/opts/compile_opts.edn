@@ -1,6 +1,5 @@
-{:main          "cloud.seltzer1717.aws.report"
+{:main          "com.foo.aws.core"
  :output-dir    "target/js"
  :output-to     "target/js/index.js"
  :optimizations :none
- :target        :nodejs
- :deps-cmd      "npm"}
+ :target        :nodejs}

@@ -1,5 +1,7 @@
 (ns com.foo.aws.test-suite
   (:require [com.foo.aws.core-test :as c]
-            [cljs.test :refer-macros [run-tests]]))
+            [cljs.test :refer-macros [deftest is testing run-tests]]))
 
-(run-tests 'cloud.seltzer1717.clojure.godsplan.core-test)
+(defn -main [args] (run-tests 'com.foo.aws.core-test))
+
+;; (run-tests 'com.example.foo.core-test)

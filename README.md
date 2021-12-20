@@ -18,8 +18,8 @@ An archetype, for ClojureScript projects, that requires only Maven.
   - Okay - can we stop kicking XML around? Please?
   - XML gives you autocomplete in most development editors!
   - It's what all the Maven documentation is written in.
+  - Hating on XML is like hating on SQL. Turns out SQL is already great and so is XML. You don't need to create an ugly ORM (Object Relational Mapping) solution in Clojure to interact with a database. And you don't need to have a pom.clj (or pom.edn) file to interact with Maven.
   - As Rich would say, creating a pom.edn feature is a NON-GOAL.
-  - I regard the idea that all XML config should be EDN akin to the idea that SQL is bad and creating ORM facilities in every language is a good idea. It's not!
 # How? This is ClojureScript, not Java!
 - Not sure you're aware but ClojureScript compilation is Google Closure compilation, which is a Java process...
 - ClojureScript is...well...awesome! Don't be fooled by the very high learning curve. ClojureScript compilation is fully featured and quite powerful.
@@ -120,52 +120,52 @@ maven-compiler-target: 17
 The following directory structure is created for you `cranberry-fizzy-juice` (the `artifactId` you specified) project:
 ```
 cranberry-fizzy-juice
-│   clj.bat
-│   cljs.bat
-│   cljs_help.txt
-│   pom.xml
-│   print
-│   
-├───.clojure
-│   ├───opts
-│   │       compile_opts.edn
-│   │       compile_test_opts.edn
-│   │       REPL_opts.edn
-│   │       
-│   └───scripts
-│           cljs.clj
-│           compile.clj
-│
-└───src
-    ├───main
-    │   ├───clojurescript
-    │   │   └───com
-    │   │       └───example
-    │   │           └───foo
-    │   │                   core.cljs
-    │   │
-    │   └───resources
-    │           required_for_test.txt
-    │
-    └───test
-        ├───clojurescript
-        │   └───com
-        │       └───example
-        │           └───foo
-        │                   core_test.cljs
-        │                   test_suite.cljs
-        │
-        └───resources
+|   clj.bat
+|   cljs.bat
+|   cljs_help.txt
+|   pom.xml
+|
++---.clojure
+|   +---opts
+|   |       compile_opts.edn
+|   |       compile_test_opts.edn
+|   |       repl_opts.edn
+|   |
+|   \---scripts
+|           cljs.clj
+|           compile.clj
+|
+\---src
+    +---main
+    |   +---clojurescript
+    |   |   \---com
+    |   |       \---example
+    |   |           \---foo
+    |   |                   core.cljs
+    |   |
+    |   \---resources
+    |           required_for_test.txt
+    |
+    \---test
+        +---clojurescript
+        |   \---com
+        |       \---example
+        |           \---foo
+        |                   core_test.cljs
+        |                   test_suite.cljs
+        |
+        \---resources
                 required_for_test.txt
 ```
 # The `.clojure` directory
 - `opts` directory
   - The `opts` directory holds the EDN options files that the ClojureScript `cljs.main` namespace will use.
-  - There are 3 possible EDN config files, one for compile (`compile_opts.edn`), one for test compile (`compile_test_opts.edn`), and one for REPL options (`REPL_opts.edn`).
+  - There are 3 possible EDN config files, one for compile (`compile_opts.edn`), one for test compile (`compile_test_opts.edn`), one for REPL compile (`compile_repl_opts.edn`), and one for REPL options (`REPL_opts.edn`).
+  - The 3 different compile option EDN files make sure that source, test, and REPL each compiles to it's own directory. This will avoid problems attempting to share compiled JavaScript files which can result in compilation errors. It's a bit duplicative but it's better to avoid compilation issues.
 - `scripts` directory
   - The `scripts` directory holds the Clojure scripts which are used to execute the ClojureScript `cljs.main` function, the entry point for all ClojureScript compilation, testing, and REPL initiation.
   - There are 2 scripts initially. The first (`cljs.clj`) is a generic script useful for any `cljs.main` initiation including REPLs. The second (`compile.clj`) is specific to compilation.
-  - You can create your own as needed although you'll find it's better just to use these and create `exec:java` `executions` in the pom.xml.
+  - You can create your own as needed although you'll find it's better just to use these and create `exec:java` `executions` in the `pom.xml`.
   - There are occaisions when you'll want to create your own script. I will show an example of creating an AWS Lambda handler function that uses a special script.
 # Let's look at `compile_opts.edn`
 - This is just a small set of the compile options available, but it's a good example.
@@ -228,8 +228,8 @@ cranberry-fizzy-juice
     <clojure.scripts.dir>.clojure/scripts</clojure.scripts.dir>
     <clojure.opts.dir>.clojure/opts</clojure.opts.dir>
     <clojurescript.source.dir>src/main/clojurescript</clojurescript.source.dir>
-    <clojurescript.source.entrynamespace>com.foo.aws.core</clojurescript.source.entrynamespace>
-    <clojurescript.source.testentry>com.foo.aws.test-suite</clojurescript.source.testentry>
+    <clojurescript.source.entrynamespace>com.example.foo.core</clojurescript.source.entrynamespace>
+    <clojurescript.source.testentry>com.example.foo.test-suite</clojurescript.source.testentry>
     <clojurescript.source.output.dir>target/js</clojurescript.source.output.dir>
     <clojurescript.test.dir>src/test/clojurescript</clojurescript.test.dir>
     <clojurescript.test.output.dir>target/test-js</clojurescript.test.output.dir>
@@ -286,11 +286,6 @@ cranberry-fizzy-juice
             <mainClass>clojure.main</mainClass>
           </configuration>
         </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-assembly-plugin</artifactId>
-          <version>3.3.0</version>
-        </plugin>
       </plugins>
     </pluginManagement>
     <plugins>
@@ -319,9 +314,9 @@ cranberry-fizzy-juice
               <arguments>
                 <argument>${clojure.scripts.dir}/cljs.clj</argument>
                 <argument>--compile-opts</argument>
-                <argument>${clojure.opts.dir}/compile_opts.edn</argument>
+                <argument>${clojure.opts.dir}/compile_repl_opts.edn</argument>
                 <argument>--repl-opts</argument>
-                <argument>${clojure.opts.dir}/REPL_opts.edn</argument>
+                <argument>${clojure.opts.dir}/repl_opts.edn</argument>
                 <argument>--repl-env</argument>
                 <argument>node</argument>
                 <argument>--repl</argument>
@@ -344,7 +339,6 @@ cranberry-fizzy-juice
               </systemProperties>
               <additionalClasspathElements>
                 <additionalClasspathElement>${project.build.sourceDirectory}</additionalClasspathElement>
-                <additionalClasspathElement>${project.build.testSourceDirectory}</additionalClasspathElement>
                 <additionalClasspathElement>${basedir}</additionalClasspathElement>
               </additionalClasspathElements>
               <arguments>
@@ -396,12 +390,6 @@ cranberry-fizzy-juice
             <id>cljs-test</id>
             <phase>test</phase>
             <configuration>
-              <systemProperties>
-                <systemProperty>
-                  <key>maven.source.dir</key>
-                  <value>${project.build.sourceDirectory}</value>
-                </systemProperty>
-              </systemProperties>
               <additionalClasspathElements>
                 <additionalClasspathElement>${project.build.sourceDirectory}</additionalClasspathElement>
                 <additionalClasspathElement>${project.build.testSourceDirectory}</additionalClasspathElement>
@@ -421,30 +409,6 @@ cranberry-fizzy-juice
             <goals>
               <goal>java</goal>
             </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <artifactId>maven-assembly-plugin</artifactId>
-        <version>3.3.0</version>
-        <executions>
-          <execution>
-            <id>assemble-all</id>
-            <configuration>
-              <descriptors>
-                 <descriptor>src/assembly/reportEvent.xml</descriptor>
-                 <descriptor>src/assembly/dependencies.xml</descriptor>
-               </descriptors>
-             </configuration>
-          </execution>
-          <execution>
-            <id>assemble-app</id>
-            <phase>package</phase>
-            <configuration>
-              <descriptors>
-                 <descriptor>src/assembly/reportEvent.xml</descriptor>
-               </descriptors>
-             </configuration>
           </execution>
         </executions>
       </plugin>
@@ -517,6 +481,5 @@ cranberry-fizzy-juice
   - `just-maven-clojurescript-aws-archetype` for ClojureScript AWS projects
 - I will try to add more when I think there is another pattern worth sharing
 - It should be clear now that these `just-maven` archetypes let you have full control over the build process and don't constrain you to proprietary command line tools or plugins that may or may not be maintained.
-- The idea is for YOU to customize your own `pom.xml` file that best suites your needs.
+- The idea is for **YOU** to customize your own `pom.xml` file in a way that best suites your needs.
 - Remember that Maven is a very mature solution. If you need some compile, test, package, or deploy feature, chances are, Maven already supports it with some existing plugin.
-

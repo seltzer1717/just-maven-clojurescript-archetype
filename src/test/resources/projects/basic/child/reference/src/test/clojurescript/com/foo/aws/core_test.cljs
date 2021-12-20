@@ -1,6 +1,6 @@
 (ns com.foo.aws.core-test
   (:require [com.foo.aws.core :as c]
-            [cljs.test :refer-macros [deftest is]]))
+            [cljs.test :refer-macros [deftest is testing run-tests]]))
 
-(deftest test-numbers
-  (is (= 5 (c/my-add [2 3]))))
+(deftest test-reverso (is (= "blah" (c/reverso "halb"))))
+

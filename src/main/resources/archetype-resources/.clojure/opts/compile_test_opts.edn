@@ -1,6 +1,8 @@
-{:main          "cloud.seltzer1717.aws.test-suite"
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+{:main          "${package}.test-suite"
  :output-dir    "target/test-js"
- :output-to     "target/test-js/tests.js"
+ :output-to     "target/test-js/testIndex.js"
  :optimizations :none
- :target        :nodejs
- :deps-cmd      "npm"}
+ :target        :nodejs}

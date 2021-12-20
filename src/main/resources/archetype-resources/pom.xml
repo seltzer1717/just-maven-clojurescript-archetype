@@ -65,10 +65,6 @@
   </dependencies>
 
   <build>
-    <sourceDirectory>${basedir}/${clojurescript.source.dir}</sourceDirectory>
-    <testSourceDirectory>${basedir}/${clojurescript.test.dir}</testSourceDirectory>
-    <outputDirectory>${basedir}/${clojurescript.source.output.dir}</outputDirectory>
-    <testOutputDirectory>${basedir}/${clojurescript.test.output.dir}</testOutputDirectory>
     <pluginManagement>
       <plugins>
         <plugin>
@@ -78,11 +74,6 @@
           <configuration>
             <mainClass>clojure.main</mainClass>
           </configuration>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-assembly-plugin</artifactId>
-          <version>3.3.0</version>
         </plugin>
       </plugins>
     </pluginManagement>
@@ -95,7 +86,7 @@
             <id>clj</id>
             <configuration>
               <additionalClasspathElements>
-                <additionalClasspathElement>${project.build.sourceDirectory}</additionalClasspathElement>
+                <additionalClasspathElement>${basedir}/${clojurescript.source.dir}</additionalClasspathElement>
               </additionalClasspathElements>
               <commandlineArgs>${clojure.args}</commandlineArgs>
             </configuration>
@@ -107,14 +98,13 @@
             <id>cljs-repl</id>
             <configuration>
               <additionalClasspathElements>
-                <additionalClasspathElement>${project.build.sourceDirectory}</additionalClasspathElement>
+                <additionalClasspathElement>${basedir}/${clojurescript.source.dir}</additionalClasspathElement>
+                <additionalClasspathElement>${basedir}/${clojurescript.test.dir}</additionalClasspathElement>
               </additionalClasspathElements>
               <arguments>
                 <argument>${clojure.scripts.dir}/cljs.clj</argument>
                 <argument>--compile-opts</argument>
                 <argument>${clojure.opts.dir}/compile_repl_opts.edn</argument>
-                <argument>--repl-opts</argument>
-                <argument>${clojure.opts.dir}/repl_opts.edn</argument>
                 <argument>--repl-env</argument>
                 <argument>node</argument>
                 <argument>--repl</argument>
@@ -129,15 +119,8 @@
             <id>cljs-compile</id>
             <phase>compile</phase>
             <configuration>
-              <systemProperties>
-                <systemProperty>
-                  <key>maven.source.dir</key>
-                  <value>${project.build.sourceDirectory}</value>
-                </systemProperty>
-              </systemProperties>
               <additionalClasspathElements>
-                <additionalClasspathElement>${project.build.sourceDirectory}</additionalClasspathElement>
-                <additionalClasspathElement>${basedir}</additionalClasspathElement>
+                <additionalClasspathElement>${basedir}/${clojurescript.source.dir}</additionalClasspathElement>
               </additionalClasspathElements>
               <arguments>
                 <argument>${clojure.scripts.dir}/compile.clj</argument>
@@ -156,25 +139,18 @@
           <execution>
             <?m2e ignore?>
             <id>cljs-test-compile</id>
-            <phase>compile</phase>
             <configuration>
-              <systemProperties>
-                <systemProperty>
-                  <key>maven.source.dir</key>
-                  <value>${project.build.sourceDirectory}</value>
-                </systemProperty>
-              </systemProperties>
+              <classpathScope>compile</classpathScope>
               <additionalClasspathElements>
-                <additionalClasspathElement>${project.build.sourceDirectory}</additionalClasspathElement>
-                <additionalClasspathElement>${project.build.testSourceDirectory}</additionalClasspathElement>
-                <additionalClasspathElement>${basedir}</additionalClasspathElement>
+                <additionalClasspathElement>${basedir}/${clojurescript.source.dir}</additionalClasspathElement>
+                <additionalClasspathElement>${basedir}/${clojurescript.test.dir}</additionalClasspathElement>
               </additionalClasspathElements>
               <arguments>
                 <argument>${clojure.scripts.dir}/cljs.clj</argument>
                 <argument>--compile-opts</argument>
                 <argument>${clojure.opts.dir}/compile_test_opts.edn</argument>
                 <argument>--target</argument>
-                <argument>node</argument>
+                <argument>nodejs</argument>
                 <argument>--compile</argument>
                 <argument>${clojurescript.source.testentry}</argument>
               </arguments>
@@ -189,16 +165,13 @@
             <phase>test</phase>
             <configuration>
               <additionalClasspathElements>
-                <additionalClasspathElement>${project.build.sourceDirectory}</additionalClasspathElement>
-                <additionalClasspathElement>${project.build.testSourceDirectory}</additionalClasspathElement>
-                <additionalClasspathElement>${basedir}</additionalClasspathElement>
+                <additionalClasspathElement>${basedir}/${clojurescript.source.dir}</additionalClasspathElement>
+                <additionalClasspathElement>${basedir}/${clojurescript.test.dir}</additionalClasspathElement>
               </additionalClasspathElements>
               <arguments>
                 <argument>${clojure.scripts.dir}/cljs.clj</argument>
-                <argument>--compile-opts</argument>
-                <argument>${clojure.opts.dir}/compile_test_opts.edn</argument>
                 <argument>--target</argument>
-                <argument>node</argument>
+                <argument>nodejs</argument>
                 <argument>--main</argument>
                 <argument>${clojurescript.source.testentry}</argument>
                 <argument>foo</argument>
@@ -207,30 +180,6 @@
             <goals>
               <goal>java</goal>
             </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <artifactId>maven-assembly-plugin</artifactId>
-        <version>3.3.0</version>
-        <executions>
-          <execution>
-            <id>assemble-all</id>
-            <configuration>
-              <descriptors>
-                 <descriptor>src/assembly/reportEvent.xml</descriptor>
-                 <descriptor>src/assembly/dependencies.xml</descriptor>
-               </descriptors>
-             </configuration>
-          </execution>
-          <execution>
-            <id>assemble-app</id>
-            <phase>package</phase>
-            <configuration>
-              <descriptors>
-                 <descriptor>src/assembly/reportEvent.xml</descriptor>
-               </descriptors>
-             </configuration>
           </execution>
         </executions>
       </plugin>

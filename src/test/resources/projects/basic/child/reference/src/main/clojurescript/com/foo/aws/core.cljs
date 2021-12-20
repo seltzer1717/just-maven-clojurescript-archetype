@@ -1,13 +1,4 @@
-(ns com.foo.aws.core
-  (:require [cljs.nodejs :as nodejs]))
+(ns com.foo.aws.core)
 
-(nodejs/enable-util-print!)
-
-(defn my-add [ops]
-  (apply + (mapv js/parseInt ops)))
-
-(defn -main [& args]
-  (let [total (my-add args)]
-    total))
-
-(set! *main-cli-fn* -main)
+(defn reverso [halb]
+  (.join (.reverse (.split halb "")) ""))

@@ -1,9 +1,5 @@
-{:main          "cloud.seltzer1717.aws.test-suite"
+{:main          "com.foo.aws.test-suite"
  :output-dir    "target/test-js"
- :output-to     "target/test-js/tests.js"
+ :output-to     "target/test-js/testIndex.js"
  :optimizations :none
- :target        :nodejs
- :deps-cmd      "npm"
- :npm-deps      {"@aws-sdk/client-dynamodb" "3.43.0"
-                 "source-map-support"       "0.5.21"}
- :install-deps  true}
+ :target        :nodejs}
