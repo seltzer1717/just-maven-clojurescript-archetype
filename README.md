@@ -15,7 +15,7 @@ An archetype, for ClojureScript projects, that requires only Maven.
 - No plugins.
   - Plugins are sometimes not maintained or they don't do exacly what you want.
 - Avoid custom or proprietary command line tools.
-  - The Cognitect `clj` command line tool gits the Windows version lower priority.
+  - The Cognitect `clj` command line for Windows has a lower priority.q
 - Avoid 'magic' jars, e.g. jars that are built and shared for download outside a standard maven build process.
   - FYI - God bless all open source contributors and projects. I will NEVER criticize or complain about any open-source project...ever. It's free...duh. Do you have any idea how expensive it is to create software?
 - But this project uses XML :(
@@ -182,11 +182,11 @@ Maven is initiated with the `mvn` CLI command.
 - `clj.bat` starts a Clojure REPL
 - `cljs.bat` runs cljs.main with any arguments you provide
 - Creat your own.
-# Understanding how it Works
+# How it Works - Project Directory Structure, Config, Scripts, and `pom.xml`
 ## Exec Maven Plugin
 - ClojureScript compilation is Google Closure compilation which is a Java process.
 - The ClojureScript dependency jar doesn't compile cljs.main and other classes so we'll leverage Clojure to run ClojureScript.
-- The `exec-maven-plugni` let's you run java code in the same thread as the regular Maven JVM process (`mvn ...`).
+- The `exec-maven-plugin` let's you run java code in the same thread as the regular Maven JVM process (`mvn ...`).
 - This means we can use Clojure to compile ClojureScript.
   - You might be wondering why we don't use the Windows 'magic' jar on the ClojureScript site
     -  Well, that is likely an 'uber-jar', but built in a way that I don't understand. It's contents include artifacts (not dependencies) that I cannot find in the Github ClojureScript repo.
