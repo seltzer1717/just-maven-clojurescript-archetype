@@ -24,6 +24,36 @@ An archetype, for ClojureScript projects, that requires only Maven.
   - It's what all the Maven documentation is written in.
   - As Rich would say, creating a pom.edn feature is a NON-GOAL.
     - You can create a solution for yourself - it's easily possible using the `exec-maven-plugin`.
+# Compiling, testing, and running Clojure(Script)
+Maven is initiated with the `mvn` CLI command.
+## Starting a Clojure REPL
+- `mvn exec:java@clj`
+## Starting a ClojureScript REPL
+- `mvn exec:java@cljs-repl`
+## Compiling ClojureScript source main
+- `mvn exec:java@cljs-compile`
+## Compiling ClojureScript source tests
+- `mvn exec:java@cljs-test-compile`
+## Running ClojureScript tests
+- `mvn exec:java@cljs-test`
+## Maven can be verbose - running maven in 'quiet' mode
+- `mvn -q exec:java@clj`
+- `mvn -q exec:java@cljs-repl`
+- `mvn -q exec:java@cljs-compile`
+- `mvn -q exec:java@cljs-test-compile`
+- `mvn -q exec:java@cljs-test`
+## Execution as part of Maven lifecycle
+- `mvn clean install`
+  - Cleans (removes `target` folder)
+  - Compiles source main code
+  - Compiles source test code
+  - installs (does nothing - see aws archetype for creating output artifacts)
+  - Can also run 'quietly' `mvn -q clean install`
+## Too many key strokes
+- Create shell scripts
+- `clj.bat` starts a Clojure REPL
+- `cljs.bat` runs cljs.main with any arguments you provide
+- Creat your own.
 # Exec Maven Plugin
 - ClojureScript compilation is Google Closure compilation which is a Java process.
 - The ClojureScript dependency jar doesn't compile cljs.main and other classes so we'll leverage Clojure to run ClojureScript.
@@ -463,33 +493,3 @@ cranberry-fizzy-juice
   - `just-maven-clojurescript-web-archetype` for ClojureScript web projects
   - `just-maven-clojurescript-aws-archetype` for ClojureScript AWS projects
 - The idea is for **YOU** to customize your own `pom.xml` file in a way that best suites your needs.
-# Compiling, testing, and running Clojure(Script)
-- Maven is initiated with the `mvn` CLI command.
-## Starting a Clojure REPL
-- `mvn exec:java@clj`
-## Starting a ClojureScript REPL
-- `mvn exec:java@cljs-repl`
-## Compiling ClojureScript source main
-- `mvn exec:java@cljs-compile`
-## Compiling ClojureScript source tests
-- `mvn exec:java@cljs-test-compile`
-## Running ClojureScript tests
-- `mvn exec:java@cljs-test`
-## Maven can be verbose - running maven in 'quite' mode
-- `mvn -q exec:java@clj`
-- `mvn -q exec:java@cljs-repl`
-- `mvn -q exec:java@cljs-compile`
-- `mvn -q exec:java@cljs-test-compile`
-- `mvn -q exec:java@cljs-test`
-## Execution as part of Maven lifecycle
-- `mvn clean install`
-  - Cleans (removes `target` folder)
-  - Compiles source main code
-  - Compiles source test code
-  - installs (does nothing - see aws archetype for creating output artifacts)
-  - Can also run 'quietly' `mvn -q clean install`
-## Too many key strokes
-- Create shell scripts
-- `clj.bat` starts a Clojure REPL
-- `cljs.bat` runs cljs.main with any arguments you provide
-- Creat your own.
