@@ -25,7 +25,7 @@ An archetype, for ClojureScript projects, that requires only Maven.
       - It's free...duh. Do you have any idea how expensive it is to create software?
       - The ClojureScript maintainers are nothing short of **awesome!**
 
-- But this project uses XML :( (frowny-face)
+- But this project uses XML 😒
   - Okay - can we stop kicking XML around? Please?
   - XML gives you autocomplete in most development editors!
   - It's what all the Maven documentation is written in.
