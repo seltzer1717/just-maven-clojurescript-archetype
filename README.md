@@ -27,7 +27,7 @@ An archetype, for ClojureScript projects, that requires only Maven.
 
 - But this project uses XML 😒
   - Okay - can we stop kicking XML around? Please?
-  - XML gives you autocomplete in most development editors!
+  - XML gives you autocomplete in most development editors! 😲
   - It's what all the Maven documentation is written in.
   - As Rich would say, creating a pom.edn feature is a NON-GOAL.
     - You can create a solution for yourself - it's certainly possible using the `exec-maven-plugin`.
