@@ -5,31 +5,42 @@ An archetype, for ClojureScript projects, that requires only Maven.
 - This isn't another build tool. It's a Maven archetype, designed to put you in control.
   - Maven archetypes are just project stereotypes that make it easy for developers to create a new project patterned for a specific purpose.
   - So no plugins required or proprietary command line tools required.
-- Java shops are notoriously rigid when asked to introducie new build mechanisms into their existing DevOps pipeline system.
-  - This archetype introduces no new tools. It's just a maven pom that fits neatly within a curreent Maven DevOps pipeline infrastructure.
+- Java shops are notoriously rigid when asked to introduce new build mechanisms into their existing DevOps pipeline system.
+  - This archetype introduces no new tools. It's just a maven pom that fits neatly within a current Maven DevOps pipeline infrastructure.
 - Maven is an extremely mature, maintained, and tested dependency management ecosystem.
-  - Maven already has every possible dependency , build, packaging, and deployment management feature.
+  - Maven already has dozens of dependency, build, packaging, and deployment management features.
       - Why would you reinvent the wheel?
 # Goals for this Project
 - Just use Maven...only Maven.
 - No plugins.
   - Plugins are sometimes not maintained or they don't do exacly what you want.
 - Avoid custom or proprietary command line tools.
-  - The Cognitect `clj` command line for Windows has a lower priority.q
+  - The Cognitect `clj` command line tool for Windows has a lower priority than the version for Mac and Linux.
 - Avoid 'magic' jars, e.g. jars that are built and shared for download outside a standard maven build process.
-  - FYI - God bless all open source contributors and projects. I will NEVER criticize or complain about any open-source project...ever. It's free...duh. Do you have any idea how expensive it is to create software?
-- But this project uses XML :(
+  - You might be wondering why we don't use the Windows 'magic' jar on the ClojureScript site.
+  - Well, that is likely an 'uber-jar', but built in a way that I don't understand.
+  - It's contents include artifacts (not dependencies) that I cannot find in the Github ClojureScript repo.
+    - FYI - God bless all open source contributors and projects.
+      - I will **NEVER** criticize or complain about any open-source project...ever.
+      - It's free...duh. Do you have any idea how expensive it is to create software?
+      - The ClojureScript maintainers are nothing short of **awesome!**
+
+- But this project uses XML :( (frowny-face)
   - Okay - can we stop kicking XML around? Please?
   - XML gives you autocomplete in most development editors!
   - It's what all the Maven documentation is written in.
   - As Rich would say, creating a pom.edn feature is a NON-GOAL.
-    - You can create a solution for yourself - it's easily possible using the `exec-maven-plugin`.
+    - You can create a solution for yourself - it's certainly possible using the `exec-maven-plugin`.
 # Getting Started - Prerequisites
 - Install Java - https://jdk.java.net/17/
 - Install Maven - https://maven.apache.org/download.cgi
 - Install Node - https://nodejs.org/en/download/
 - Add the above commands  to your user `path` (OS specific) to include the above.
   - Assume you know how to do this.
+- Verify your installs:
+  - `java --version`
+  - `mvn --version`
+  - `node --version`
 # Getting Started - Using the Archetype
 - Navigate to your Maven based Java projects directory.
   - You should really designate a single directory on your computer that holds maven projects. I recommend `C:/Users/<you>/Documents/Development/Java/projects` (Windows 11). I assume you can determine the equivalent for your OS.
@@ -164,34 +175,33 @@ Maven is initiated with the `mvn` CLI command.
 - `mvn exec:java@cljs-test-compile`
 ## Running ClojureScript tests
 - `mvn exec:java@cljs-test`
-## Maven can be verbose - running maven in 'quiet' mode
+## Maven can be verbose - Running Maven in 'quiet' Mode
 - `mvn -q exec:java@clj`
 - `mvn -q exec:java@cljs-repl`
 - `mvn -q exec:java@cljs-compile`
 - `mvn -q exec:java@cljs-test-compile`
 - `mvn -q exec:java@cljs-test`
-## Execution as part of Maven lifecycle
+## Execution as Part of Maven Lifecycle
 - `mvn clean install`
   - Cleans (removes `target` folder)
   - Compiles source main code
   - Compiles source test code
   - installs (does nothing - see aws archetype for creating output artifacts)
   - Can also run 'quietly' `mvn -q clean install`
-## Too many key strokes
+## Too Many Key Strokes
 - Create shell scripts
 - `clj.bat` starts a Clojure REPL
 - `cljs.bat` runs cljs.main with any arguments you provide
 - Creat your own.
+
 # How it Works - Project Directory Structure, Config, Scripts, and `pom.xml`
 ## Exec Maven Plugin
 - ClojureScript compilation is Google Closure compilation which is a Java process.
 - The ClojureScript dependency jar doesn't compile cljs.main and other classes so we'll leverage Clojure to run ClojureScript.
 - The `exec-maven-plugin` let's you run java code in the same thread as the regular Maven JVM process (`mvn ...`).
 - This means we can use Clojure to compile ClojureScript.
-  - You might be wondering why we don't use the Windows 'magic' jar on the ClojureScript site
-    -  Well, that is likely an 'uber-jar', but built in a way that I don't understand. It's contents include artifacts (not dependencies) that I cannot find in the Github ClojureScript repo.
-    - The archetype uses the standard Maven ClojureScript dependency so no mysteries.
-## The `.clojure` directory
+- The archetype uses the standard Maven ClojureScript dependency so no mysteries.
+## The `.clojure` Directory
 - `opts` directory
   - The `opts` directory holds the EDN options files that the ClojureScript `cljs.main` namespace will use.
   - There are 4 EDN config files, `compile_opts.edn` (compile regular source), `compile_test_opts.edn` (compile tests), `compile_repl_opts.edn` (REPL compile), and `repl_opts.edn` (REPL specific config that is not compiler specific config).
@@ -200,7 +210,7 @@ Maven is initiated with the `mvn` CLI command.
   - There are 2 scripts initially. The first (`cljs.clj`) is a generic script useful for any `cljs.main` initiation including REPLs. The second (`compile.clj`) is specific to compilation.
   - You can create your own as needed although you'll find it's better just to use these and create `exec:java` `executions` in the `pom.xml`.
     - There are occaisions when you'll want to create your own script. I will show an example of creating an AWS Lambda handler function that uses a special script.
-## Let's look at `compile_opts.edn`
+## Let's Look at `compile_opts.edn`
 - This is just a small set of the compile options available, but it's a good example.
 - See the ClojureScript compiler options page for details: https://clojurescript.org/reference/compiler-options and for the complete set of options http://cljs.github.io/api/compiler-options/.
 ```
@@ -219,7 +229,7 @@ Maven is initiated with the `mvn` CLI command.
     - For node applications , it's best just to leave this as `:none`
   - `:target` defines which ecosystem Google Closure will target during compilation.
 - See https://clojurescript.org/index for details on both compiler and REPL options.
-## Let's look at the `cljs.clj` script
+## Let's Look at the `cljs.clj` Script
 - Notice that this is Clojure, not ClojureScript.
 - ClojureScript compilation is executed through Clojure.
 - The ClojureScript depedency jar does not compile cljs.main to a class file, it's just a .clj file
@@ -239,7 +249,7 @@ Maven is initiated with the `mvn` CLI command.
 ```
 - This Clojure script file is designed to be generic and, as such, includes the last section which just executes Clojure after executing the ClojureScript REPL.
 - The compile.clj script file is exactly the same as the cljs.clj file except that it doesn't check for REPL exection.
-## Let's look at the `pom.xml` file
+## Let's Look at the `pom.xml` File
 ```
 <?xml version="1.0" encoding="UTF-8" ?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -443,26 +453,26 @@ Maven is initiated with the `mvn` CLI command.
 - Next we have the Clojure `dependency` which replaces the one ClojureScript pulls in.
 - Then `commons-codec` with a new verion which fixes the vulnerability.
 - Then `core.async` to support asynchronous JavaScript.
-## The Maven `build` section
+## The Maven `build` Section
 - `pluginManagement` is generally only needed if you'll use the `pom.xml` file as a parent pom for another project or `plugins` section of current pom.
   - It defines the coordinates for the  build plugins that will be used, including the `version`s, but does not have the specific build `configurations` that we'll discuss below.
   - Note we have the `exec-maven-plugin` that makes the `archetype` possible. More below.
 - The `plugins` section appears, initially, to be a copy of what is in the `pluginManagement` section but it's not. In the `plugins` section we'll provide more detail for builds, tests, and packaging.
-## The `maven-exec-plugin`
+## The `exec-maven-plugin` Plugin
 - It allows projects to leverage their own `compile`, `test`, `packaging`, and `deployment` actions (or phases). Phases are how Maven defines project activities. See https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html for more about the Maven Build Lifecycle.
 - The plugin defines a set of `executions` which can be called directly or associated to a Maven build phase.
 - An `execution` can have an `id` which names the `execution` for the Maven's command line or a `phase` can be added which is triggered by the Maven lifecycle.
 - The `configuration` sections configure the execution including classpath, system properties, command line arguments and more.
 - The `exec-maven-plugin` has two possible `goals`, `java` or `exec`. We use the `jova` goal only in this project. It allows us to execute our own Java code as part of the Maven build process. The `exec` plugin let's you execute any arbitrary program in a separate process.
 - You can review the details of the `exec-maven-plugin` here https://www.mojohaus.org/exec-maven-plugin/.
-## The `clj` execution
+## The `clj` Execution
 - This execution is purely for initiating Clojure. In fact, if executed directly, will start a Clojure, REPL as that's the default for `clojure.main`.
   - `clojure.main` is the code that runs for all the executions.
 - In this case we're just adding the ClojureScript source directory to the classpath.
   - The `exec-maven-plugin` will automatically add the source main, source test, source main output, and source test output folders to the classpath. For ClojureScript, compilation folders are defined separately in the EDN compile files so we don't define them in to `pom.xml` file.
     - This avoids issues with the ClojureScript compiler when compiling main vs. test code.
 - The `commandlineArgs` element allows this execution to use clojure.main with arguments from the maven command line, perhaps passed in a batch (shell) script. See below.
-## The `cljs-repl` execution
+## The `cljs-repl` Execution
 - This execution starts the cljs REPL.
 - As above, just adds the ClojureScript source to the classpath just like the `clj` execution.
 - The `arguments` section is where we start leveraging the CLJS compiler:
@@ -472,22 +482,22 @@ Maven is initiated with the `mvn` CLI command.
   - `--repl` which is the single main option which starts the cljs REPL.n
 - The compile option is needed because using the REPL will need compilation as well. It also makes sure that compiled files for regular compilation, test compilation, and REPL compilation are kept separate.
 - There are no `--repl-opts` defined by default. You can review the set of possible options here https://clojurescript.org/reference/repl-options and a more complete set of options here http://cljs.github.io/api/repl-options/.
-## The `cljs-compile` execution
+## The `cljs-compile` Execution
 - The `cljs-compile` execution compiles your ClojureScript source. This archetype is specifically for node development. Node execution is generally not focused on the size of the build artifacts as they are not pushed to clients, just to servers.
   - `--compile-opts` sets compiler options just as above.
   - `--target` sets runtime target 
   - `--compile` is tha main option - compilation
   - The last `argument` tells the ClojureScript compiler to use a specific namespace as the entry point namespace.
-## The `cljs-test-compile` execution
+## The `cljs-test-compile` Execution
 - This `execution` is almost identical to the `cljs-compile` `execution` except that it is focused on compiling tests rather than the regular source code.
 - `compile-opts` keep test generated JavaScript in it's own folder.
 - This execution is also associated to the compile `phase`.
   - This make sense. When a Java maven project is built, the source and test code are compiled during the compile `phase`.
-## The `cljs-test` execution
+## The `cljs-test` Execution
 - This `execution` is designed to run the ClojureScript tests.
 - It uses the initial options of `--compile-opts` and `--target`. And it uses the `--main` main option.
 - This `--main` option passes a cljs namespace to execute. In this case the test suite namespace.
-## General Archetype for `node` projects
+# General Archetype for `node` Projects
 - This archetype is for plain node projects.
 - There are other cloud.seltzer1717 archetypes you might find useful:
   - `just-maven-clojure-archetype` for Clojure projects
