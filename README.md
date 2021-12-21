@@ -163,7 +163,7 @@ cranberry-fizzy-juice
         \---resources
                 required_for_test.txt
 ```
-# Compiling, testing, and running Clojure(Script)
+# Compiling, Testing, and Running ClojureScript
 Maven is initiated with the `mvn` CLI command.
 ## Starting a Clojure REPL
 - `mvn exec:java@clj`
@@ -175,7 +175,7 @@ Maven is initiated with the `mvn` CLI command.
 - `mvn exec:java@cljs-test-compile`
 ## Running ClojureScript tests
 - `mvn exec:java@cljs-test`
-## Maven can be verbose - Running Maven in 'quiet' Mode
+## Maven Can Be Verbose - Running Maven in 'quiet' Mode
 - `mvn -q exec:java@clj`
 - `mvn -q exec:java@cljs-repl`
 - `mvn -q exec:java@cljs-compile`
@@ -192,7 +192,7 @@ Maven is initiated with the `mvn` CLI command.
 - Create shell scripts
 - `clj.bat` starts a Clojure REPL
 - `cljs.bat` runs cljs.main with any arguments you provide
-- Creat your own.
+- Create your own.
 
 # How it Works - Project Directory Structure, Config, Scripts, and `pom.xml`
 ## Exec Maven Plugin
