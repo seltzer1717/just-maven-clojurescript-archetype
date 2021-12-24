@@ -31,7 +31,7 @@ An archetype, for ClojureScript projects, that requires only Maven.
   - There are a large number of consulting Java shops where Windows is the primary OS.
 - Avoid 'magic' jars, e.g. jars that are built and shared for download outside a standard maven build process.
   - You might be wondering why we don't use the Windows 'magic' jar on the ClojureScript site.
-  - This jar was designed to allow developers to try ClojureScript out. It's not suitable for an entrpise building a large application.
+  - This jar was designed to allow developers to try ClojureScript out. It's not suitable for enterpise level development where dependencies need to be tracked and validated for security and licensing.
 # Open Source Software
 - God bless all open source contributors and projects.
 - I will **NEVER** criticize or complain about any open-source project...**EVER**!
