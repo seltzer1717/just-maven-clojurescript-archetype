@@ -1,4 +1,4 @@
-{:main          "com.foo.aws.core"
+{:main          "com.example.sample.core"
  :output-dir    "target/js"
  :output-to     "target/js/index.js"
  :optimizations :none

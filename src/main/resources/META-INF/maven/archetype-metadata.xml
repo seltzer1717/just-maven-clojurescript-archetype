@@ -13,7 +13,7 @@
         <defaultValue>1.10.2</defaultValue>
       </requiredProperty>
       <requiredProperty key = "clojurescript-version">
-        <defaultValue>1.10.758</defaultValue>
+        <defaultValue>1.10.914</defaultValue>
       </requiredProperty>
       <requiredProperty key = "commons-codec-version">
         <defaultValue>1.15</defaultValue>

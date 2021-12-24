@@ -1,0 +1,22 @@
+# CLEAN
+mvn clean
+
+# CLEAN INSTALL
+mvn clean install
+
+# ETC
+mvn compile
+mvn test
+etc...
+
+# RELEASE PROFILE #
+###################
+
+# NEXUS STAGE
+mvn nexus-staging:release -P sonatype-release
+
+# NEXUS DROP STAGING
+mvn nexus-staging:drop -P sonatype-release
+
+# NEXUS RELEASE
+mvn clean deploy -P sonatype-release
