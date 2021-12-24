@@ -1,17 +1,17 @@
 # just-maven-clojurescript-archetype
 An archetype, for ClojureScript projects, that requires only Maven.
 
-## Current 0.1-RELEASE
-```
-  <groupId>cloud.seltzer1717.clojure</groupId>
-  <artifactId>just-maven-clojurescript-archetype</artifactId>
-  <version>0.1-RELEASE</version>
-```
-## In Development 0.2-RELEASE
+## Current 0.2-RELEASE
 ```
   <groupId>cloud.seltzer1717.clojure</groupId>
   <artifactId>just-maven-clojurescript-archetype</artifactId>
   <version>0.2-RELEASE</version>
+```
+## In Development 0.21-RELEASE
+```
+  <groupId>cloud.seltzer1717.clojure</groupId>
+  <artifactId>just-maven-clojurescript-archetype</artifactId>
+  <version>0.21-RELEASE</version>
 ```
 
 # Why another ClojureScript build tool?
