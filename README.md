@@ -458,7 +458,7 @@ Navigate to your artifactId folder (e.g. cranberry-fizzy-juice)
   - `groupId`
   - `artifactId`
   - `version`
-- Notice the packaging is `pom` and not `jar`. A ClojureScript project does fall neatly into standard packaging like `jar`. Clojure, ont the other hand, does. `pom` packaging allows us to create ClojureScript packaging and project lifecycle.
+- Notice the packaging is `pom` and not `jar`. A ClojureScript project does not fall neatly into standard packaging like `jar`. Clojure, on the other hand, does. `pom` packaging allows us to create ClojureScript packaging during the Maven project lifecycle.
 - Almost everything is defined as a property in the `properties` section. This makes it easier to change `version`s, paths, main namespaces in one place, rather than having to search the entire `pom.xml` file to make an update.
 - The `dependencies` start with ClojureScript.
   - Note that the Clojure sub-dependency is excluded. This is to include the most recent version of Clojure.
