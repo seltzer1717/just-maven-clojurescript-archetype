@@ -16,7 +16,7 @@ An archetype, for ClojureScript projects, that requires only Maven.
 
 # Why another ClojureScript build tool?
 - This isn't another build tool. It's a Maven archetype designed to put you in control.
-  - Maven archetypes are just project stereotypes that make it easy for developers to create a new project patterned for a specific purpose.
+  - Maven archetypes are just project stereotypes that make it easy for developers to create a new projects, patterned for a specific purpose.
   - So no plugins or proprietary command line tools required.
 - Java shops are notoriously rigid when asked to introduce new build mechanisms into their existing DevOps pipeline systems.
   - This archetype introduces no new tools. It's just a maven pom that fits neatly within a current Maven DevOps pipeline system.
