@@ -200,7 +200,8 @@ Navigate to your artifactId folder (e.g. cranberry-fizzy-juice)
   - Cleans (removes `target` folder)
   - Compiles source main code
   - Compiles source test code
-  - installs (does nothing - see aws archetype for creating output artifacts)
+  - Runs tests
+  - installs (does nothing - see AWS Lambda archetype (coming soon) for creating output artifacts)
   - Can also run 'quietly' `mvn -q clean install`
 ## Too Many Key Strokes
 - Create shell scripts
