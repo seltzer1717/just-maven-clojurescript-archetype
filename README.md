@@ -183,6 +183,59 @@ Navigate to your artifactId folder (e.g. cranberry-fizzy-juice)
 - `mvn exec:java@cljs-test-compile`
 ## Running ClojureScript tests
 - `mvn exec:java@cljs-test`
+## Running ClojureScript from node
+- `node` (run `mvn clean install` first)
+```
+Welcome to Node.js v16.13.1.
+Type ".help" for more information.
+>
+```
+- `.help`
+```
+> .help
+.break    Sometimes you get stuck, this gets you out
+.clear    Alias for .break
+.editor   Enter editor mode
+.exit     Exit the REPL
+.help     Print this help message
+.load     Load JS from a file into the REPL session
+.save     Save all evaluated commands in this REPL session to a file
+
+Press Ctrl+C to abort current expression, Ctrl+D to exit the REPL
+>
+```
+- `.load target/js/index.js`
+```
+> .load target/js/index.js
+#!/usr/bin/env node
+if(typeof Math.imul == "undefined" || (Math.imul(0xffffffff,5) == 0)) {
+    Math.imul = function (a, b) {
+            var ah  = (a >>> 16) & 0xffff;
+                    var al = a & 0xffff;
+                            var bh  = (b >>> 16) & 0xffff;
+                                    var bl = b & 0xffff;
+                                            // the shift by 0 fixes the sign on the high part
+                                                    // the final |0 converts the unsigned value into a signed value
+                                                            return ((al * bl) + (((ah * bl + al * bh) << 16) >>> 0)|0);
+                                                                }
+                                                                }
+
+                                                                var path = require("path");
+                                                                try {
+                                                                    require("source-map-support").install();
+                                                                    } catch(err) {
+                                                                    }
+                                                                    require(path.join(path.resolve("."),"target/js","goog","bootstrap","nodejs.js"));
+                                                                    require(path.join(path.resolve("."),"target/js","cljs_deps.js"));
+                                                                    goog.global.CLOSURE_UNCOMPILED_DEFINES = {"cljs.core._STAR_target_STAR_":"nodejs"};
+                                                                    goog.require("com.example.fwap.core");
+                                                                    goog.require("cljs.nodejscli");
+
+null
+> com.example.fwap.core.reverso("halb");
+'blah'
+>
+```
 ## Maven Can Be Verbose - Running Maven in 'quiet' Mode
 - `mvn -q exec:java@clj`
 - `mvn -q exec:java@cljs-repl`
