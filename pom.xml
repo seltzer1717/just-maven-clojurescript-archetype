@@ -4,7 +4,7 @@
 
   <groupId>cloud.seltzer1717.clojure</groupId>
   <artifactId>just-maven-clojurescript-archetype</artifactId>
-  <version>0.2-RELEASE</version>
+  <version>0.21-RELEASE</version>
   <packaging>maven-archetype</packaging>
 
   <name>cloud.seltzer1717.clojure:just-maven-clojurescript-archetype</name>

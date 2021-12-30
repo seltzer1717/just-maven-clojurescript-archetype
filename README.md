@@ -86,10 +86,10 @@ More? -DarchetypeVersion=0.2-RELEASE
 [INFO] --- maven-archetype-plugin:3.0.1:generate (default-cli) @ standalone-pom ---
 [INFO] Generating project in Interactive mode
 [INFO] Archetype repository not defined. Using the one from [cloud.seltzer1717.clojure:just-maven-clojurescript-archetype:0.2-RELEASE] found in catalog local
-Define value for property 'groupId': com.example.foo
+Define value for property 'groupId': com.example.fwap
 Define value for property 'artifactId': cranberry-fizzy-juice
 Define value for property 'version' 1.0-SNAPSHOT: : 
-Define value for property 'package' com.example.foo: : 
+Define value for property 'package' com.example.fwap: : 
 [INFO] Using property: clojure-version = 1.10.2
 [INFO] Using property: clojurescript-version = 1.10.914
 [INFO] Using property: commons-codec-version = 1.15
@@ -97,10 +97,10 @@ Define value for property 'package' com.example.foo: :
 [INFO] Using property: maven-compiler-source = 17
 [INFO] Using property: maven-compiler-target = 17
 Confirm properties configuration:
-groupId: com.example.foo
+groupId: com.example.fwap
 artifactId: cranberry-fizzy-juice
 version: 1.0-SNAPSHOT
-package: com.example.foo
+package: com.example.fwap
 clojure-version: 1.10.2
 clojurescript-version: 1.10.914
 commons-codec-version: 1.15
@@ -112,15 +112,15 @@ maven-compiler-target: 17
 [INFO] ----------------------------------------------------------------------------
 [INFO] Using following parameters for creating project from Archetype: just-maven-clojurescript-archetype:0.2-RELEASE
 [INFO] ----------------------------------------------------------------------------
-[INFO] Parameter: groupId, Value: com.example.foo
+[INFO] Parameter: groupId, Value: com.example.fwap
 [INFO] Parameter: artifactId, Value: cranberry-fizzy-juice
 [INFO] Parameter: version, Value: 1.0-SNAPSHOT
-[INFO] Parameter: package, Value: com.example.foo
-[INFO] Parameter: packageInPathFormat, Value: com/example/foo
+[INFO] Parameter: package, Value: com.example.fwap
+[INFO] Parameter: packageInPathFormat, Value: com/example/fwap
 [INFO] Parameter: clojure-version, Value: 1.10.2
-[INFO] Parameter: package, Value: com.example.foo
+[INFO] Parameter: package, Value: com.example.fwap
 [INFO] Parameter: core-async-version, Value: 1.5.640
-[INFO] Parameter: groupId, Value: com.example.foo
+[INFO] Parameter: groupId, Value: com.example.fwap
 [INFO] Parameter: maven-compiler-target, Value: 17
 [INFO] Parameter: artifactId, Value: cranberry-fizzy-juice
 [INFO] Parameter: clojurescript-version, Value: 1.10.914
@@ -159,7 +159,7 @@ cranberry-fizzy-juice
     |   +---clojurescript
     |   |   \---com
     |   |       \---example
-    |   |           \---foo
+    |   |           \---fwap
     |   |                   core.cljs
     |   |
     |   \---resources
@@ -169,7 +169,7 @@ cranberry-fizzy-juice
         +---clojurescript
         |   \---com
         |       \---example
-        |           \---foo
+        |           \---fwap
         |                   core_test.cljs
         |                   test_suite.cljs
         |
@@ -230,7 +230,7 @@ Navigate to your artifactId folder (e.g. cranberry-fizzy-juice)
 - This is just a small set of the compile options available, but it's a good example.
 - See the ClojureScript compiler options page for details: https://clojurescript.org/reference/compiler-options and for the complete set of options http://cljs.github.io/api/compiler-options/.
 ```
-{:main          "cloud.seltzer1717.aws.report"
+{:main          "com.example.fwap.core"
  :output-dir    "target/js"
  :output-to     "target/js/index.js"
  :optimizations :none
